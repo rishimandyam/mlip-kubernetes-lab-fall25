@@ -5,8 +5,12 @@ import requests
 app = Flask(__name__)
 
 # TODO: Add backend server URL for round-robin distribution
+
 BACKEND_SERVERS = [
-     # TODO: implement the appropriate, service-aware backend -server URL for the load balancer
+     # DONE: implement the appropriate, service-aware backend -server URL for the load balancer
+    "http://flask-backend-service-0:5000",
+    "http://flask-backend-service-1:5000",
+    "http://flask-backend-service-2:5000"
 ]
 
 # Round-robin iterator for distributing requests
@@ -16,10 +20,12 @@ server_pool = itertools.cycle(BACKEND_SERVERS)
 def load_balance():
     backend_url = next(server_pool)
     response = requests.get(f"{backend_url}/model-info")
+
     try:
         data = response.json()
     except ValueError:
         return {"error": "Invalid JSON from backend", "raw": response.text}, 502
+    
     return data, response.status_code
 
 @app.route('/predict', methods=['POST'])
@@ -27,7 +33,14 @@ def predict():
     backend_url = next(server_pool)
     url = f"{backend_url}/predict"
 
-    # TODO: Implement the rest of the POST request for the predict endpoint
+    # DONE: Implement the rest of the POST request for the predict endpoint
+    user_data = request.get_json()
+    response = requests.post(url, json=user_data)
+    response.raise_for_status()
+    try:
+        data = response.json()
+    except ValueError:
+        return {"error": "Invalid JSON from backend", "raw": response.text}, 502
 
 
 if __name__ == '__main__':
