@@ -8,9 +8,9 @@ app = Flask(__name__)
 
 BACKEND_SERVERS = [
      # DONE: implement the appropriate, service-aware backend -server URL for the load balancer
-    "http://flask-backend-service-0:5000",
-    "http://flask-backend-service-1:5000",
-    "http://flask-backend-service-2:5000"
+    "http://flask-backend-service-0:5001",
+    "http://flask-backend-service-1:5001",
+    "http://flask-backend-service-2:5001"
 ]
 
 # Round-robin iterator for distributing requests

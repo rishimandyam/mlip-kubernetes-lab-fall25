@@ -31,7 +31,7 @@ spec:
           containers:
           - name: model-trainer
             # TODO: Replace <DockerHub-Username> with your Docker Hub username, and use the appropriate image name and tag
-            image: rishimandyam12/trainer:1.0.0
+            image: rmandyam12/trainer:1.0.0
             volumeMounts:
             - name: model-volume
               mountPath: /shared-volume

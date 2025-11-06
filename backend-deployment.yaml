@@ -15,14 +15,14 @@ spec:
       containers:
       - name: flask-backend
         # DONE: Replace <DockerHub-Username> with your Docker Hub username, and use the appropriate image name and tag
-        image: rishimandyam12/backend:1.0.0
+        image: rmandyam12/backend:1.0.0
         ports:
         - containerPort: 5001
         lifecycle:
           preStop:
             ## DONE: implement this so that backend.py handles SIGTERM and logs a message
-            command: ["sh", "-c", "echo 'Received SIGTERM in backend pod, shutting down gracefully...' >> /tmp/shutdown.log"]
-
+            exec:
+              command: ["sh", "-c", "echo 'Received SIGTERM in backend pod, shutting down gracefully...' >> /tmp/shutdown.log"]
 
         volumeMounts:
         - name: model-volume
